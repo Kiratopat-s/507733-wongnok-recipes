@@ -1,6 +1,6 @@
-import type { NextAuthConfig } from 'next-auth';
+import type NextAuthConfig from 'next-auth';
 
-export const authConfig: NextAuthConfig = {
+export const authConfig = {
     pages: {
         signIn: '/login',
     }, callbacks: {
@@ -17,4 +17,4 @@ export const authConfig: NextAuthConfig = {
         },
     },
     providers: [], // Add providers with an empty array for now
-} satisfies NextAuthConfig;
+} satisfies any;
