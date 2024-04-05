@@ -1,8 +1,6 @@
-# NEXTJS 14 with NEXT-AUTH template
+# About
 
-This is a NEXTJS version 14 with authentication by next-auth template write on TypeScript by <a href="https://www.linkedin.com/in/kiratipat/">Kirato();</a> [ Kiratipat ]
-
-On this template use auth provider GoogleProvider and LineProvider if you want more please checkout Next auth doccument : https://authjs.dev/getting-started/providers
+A Wongnok web application designed to foster a vibrant community of food enthusiasts in Thailand and beyond.
 
 ## How to start dev
 
