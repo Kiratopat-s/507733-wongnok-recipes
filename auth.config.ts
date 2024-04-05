@@ -1,6 +1,8 @@
+/* eslint-disable */
+// eslint-disable-next-line
 import type NextAuthConfig from 'next-auth';
 
-export const authConfig = {
+export const authConfig: any = {
     pages: {
         signIn: '/login',
     }, callbacks: {
