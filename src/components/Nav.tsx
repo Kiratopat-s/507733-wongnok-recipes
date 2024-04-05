@@ -2,14 +2,18 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import React from "react";
 import { DefaultSession } from "next-auth";
+import Link from "next/link";
 
 function Nav({ session }: { session?: DefaultSession | null }) {
   return (
-    <nav className="fixed top-0 w-full p-4 bg-black text-white flex justify-between  rounded-b-lg ring-1 ring-white shadow shadow-white">
+    <nav className="z-50 fixed top-0 w-full p-4 bg-black text-white flex justify-between  rounded-b-lg ring-1 ring-white shadow shadow-white">
       <div className="flex justify-start item-center align-middle ml-10">
-        <h1 className="flex flex-col justify-center hover:text-rose-500 hover:drop-shadow-xl text-2xl font-bold drop-shadow drop-shadow-white cursor-pointer transition-all duration-300 ease-in-out">
-          Main App
-        </h1>
+        <Link
+          className="flex flex-col justify-center hover:text-rose-500 hover:drop-shadow-xl text-2xl font-bold drop-shadow drop-shadow-white cursor-pointer transition-all duration-300 ease-in-out"
+          href={"/"}
+        >
+          Wongnok 🍲
+        </Link>
       </div>
       <div className="flex gap-8 justify-end mr-10">
         {session && (
@@ -27,6 +31,7 @@ function Nav({ session }: { session?: DefaultSession | null }) {
                 </div>
               </div>
             </div>
+
             <button
               onClick={() => signOut()}
               className="btn bg-red-500 text-white"
@@ -37,9 +42,9 @@ function Nav({ session }: { session?: DefaultSession | null }) {
         )}
         {!session && (
           <>
-            <button className="btn hover:text-rose-500 hover:shadow-rose-500 cursor-pointer transition-all duration-300 ease-in-out">
+            {/* <button className="btn hover:text-rose-500 hover:shadow-rose-500 cursor-pointer transition-all duration-300 ease-in-out">
               About me
-            </button>
+            </button> */}
             <button
               onClick={() => signIn()}
               className="btn hover:text-rose-500 hover:shadow-rose-500 cursor-pointer transition-all duration-300 ease-in-out"
