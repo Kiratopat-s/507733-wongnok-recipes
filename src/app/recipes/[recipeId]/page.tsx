@@ -45,6 +45,7 @@ function DisplayRating({
               name={`rating-${id}`}
               className="mask mask-star-2 bg-orange-400"
               checked
+              readOnly
             />
           );
         } else {
@@ -54,6 +55,7 @@ function DisplayRating({
               type="radio"
               name={`rating-${id}`}
               className="mask mask-star-2 bg-orange-400"
+              readOnly
             />
           );
         }
