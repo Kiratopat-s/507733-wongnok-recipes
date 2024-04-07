@@ -5,7 +5,9 @@ import { DefaultSession } from "next-auth";
 import Link from "next/link";
 import Image from "next/image";
 
-function Nav({ session }: { session?: DefaultSession | null }) {
+function Nav() {
+  const { data: session } = useSession();
+  console.log(session);
   return (
     <nav className="z-50 fixed top-0 w-full p-4 bg-black text-white flex justify-around  rounded-b-lg ring-1 ring-white shadow shadow-white">
       <div className="flex justify-start item-center align-middle">
@@ -20,6 +22,12 @@ function Nav({ session }: { session?: DefaultSession | null }) {
         {session && (
           <>
             <div className="flex gap:2 md:gap-4">
+              <Link
+                href={"/recipes/newRecipe"}
+                className="btn shadow-lg btn-primary text-white font-bold py-3 rounded-2xl bg-orange-500 md:flex hidden"
+              >
+                📝 New post
+              </Link>
               <p className="btn hidden md:flex">
                 Welcome {session.user?.name} !
               </p>
@@ -36,12 +44,6 @@ function Nav({ session }: { session?: DefaultSession | null }) {
                     className={`self-center h-5 object-cover rounded-lg`}
                     loading="lazy"
                   />
-                  {/* <img
-                    src={
-                      session.user?.image ||
-                      `https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg`
-                    }
-                  /> */}
                 </div>
               </div>
             </div>
@@ -56,9 +58,6 @@ function Nav({ session }: { session?: DefaultSession | null }) {
         )}
         {!session && (
           <>
-            {/* <button className="btn hover:text-rose-500 hover:shadow-rose-500 cursor-pointer transition-all duration-300 ease-in-out">
-              About me
-            </button> */}
             <button
               onClick={() => signIn()}
               className="btn hover:text-rose-500 hover:shadow-rose-500 cursor-pointer transition-all duration-300 ease-in-out"
