@@ -231,7 +231,6 @@ function recipesDetails({ params }: { params: { recipeId: string } }) {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <Nav session={session} />
       <section
         id="header"
         className="w-[90vw] bg-white mt-3 rounded-md text-black py-2 px-4"
