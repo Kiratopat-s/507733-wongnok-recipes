@@ -1,6 +1,7 @@
 /* eslint-disable */
 // eslint-disable-next-line
-import type NextAuthConfig from 'next-auth';
+import { PrismaClient } from '@prisma/client';
+const prisma = new PrismaClient();
 
 export const authConfig: any = {
     pages: {
@@ -18,9 +19,27 @@ export const authConfig: any = {
             return true;
         },
         async jwt({ token, user, account }: { token: any, user: any, account: any }) {
-
             if (account) {
                 token.id_token = account.id_token;
+
+                // Check if accessToken exists in the Member model
+                const member = await prisma.member.findUnique({
+                    where: {
+                        access_token: account.accessToken || null,
+                    },
+                });
+
+                // If member doesn't exist, insert a new member
+                if (!member) {
+                    await prisma.member.create({
+                        data: {
+                            name: user.name,
+                            email: user.email || '',
+                            access_token: account.accessToken,
+                            image_url: user.image,
+                        },
+                    });
+                }
             }
             return token;
         },
