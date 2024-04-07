@@ -32,7 +32,10 @@ function Nav() {
                 Welcome {session.user?.name} !
               </p>
               <div className="avatar">
-                <div className="w-10 h-10 md:w-12 md:h-12 rounded-full self-center">
+                <Link
+                  href={"/recipes/mine"}
+                  className="w-10 h-10 md:w-12 md:h-12 rounded-full self-center"
+                >
                   <Image
                     src={
                       session.user?.image ||
@@ -44,7 +47,7 @@ function Nav() {
                     className={`self-center h-5 object-cover rounded-lg`}
                     loading="lazy"
                   />
-                </div>
+                </Link>
               </div>
             </div>
 
