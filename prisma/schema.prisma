@@ -33,6 +33,7 @@ model member {
   name         String    @db.VarChar(255)
   email        String?   @db.VarChar(255)
   access_token String    @db.VarChar(255)
+  image_url    String    @db.VarChar(255)
   comment      comment[]
   recipe       recipe[]
 }
