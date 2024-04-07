@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model comment {
+  id          Int      @id @default(autoincrement())
+  member_id   Int
+  recipe_id   Int
+  description String
+  posted_date DateTime @db.Timestamp(6)
+  rating      Int
+  member      member   @relation(fields: [member_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  recipe      recipe   @relation(fields: [recipe_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model ingredient {
+  id        Int    @id @default(autoincrement())
+  recipe_id Int
+  name      String @db.VarChar(255)
+  quantity  Int
+  unit      String @db.VarChar(255)
+  index     Int
+  recipe    recipe @relation(fields: [recipe_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model member {
+  id           Int       @id @default(autoincrement())
+  name         String    @db.VarChar(255)
+  email        String?   @db.VarChar(255)
+  access_token String    @db.VarChar(255)
+  comment      comment[]
+  recipe       recipe[]
+}
+
+model recipe {
+  id             Int          @id @default(autoincrement())
+  member_id      Int
+  name           String       @db.VarChar(255)
+  description    String?
+  image_url      String       @db.VarChar(255)
+  current_rating Float
+  voted_count    Int
+  read_count     Int
+  is_public      Boolean
+  posted_date    DateTime     @db.Timestamp(6)
+  latest_update  DateTime     @db.Timestamp(6)
+  comment        comment[]
+  ingredient     ingredient[]
+  member         member       @relation(fields: [member_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  step           step[]
+}
+
+model step {
+  id          Int    @id @default(autoincrement())
+  recipe_id   Int
+  description String
+  index       Int
+  recipe      recipe @relation(fields: [recipe_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}

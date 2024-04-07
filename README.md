@@ -39,3 +39,67 @@ NEXTAUTH_SECRET=
 - NEXTJS version 14.0.4
 - Tailwind CSS + Daisy UI
 - NextAuth.js
+
+# Prisma
+
+Examples
+
+Set up a new Prisma project
+
+```bash
+$ prisma init
+```
+
+Generate artifacts (e.g. Prisma Client)
+
+```bash
+$ prisma generate
+```
+
+Browse your data
+
+```bash
+$ prisma studio
+```
+
+Create migrations from your Prisma schema, apply them to the database, generate artifacts (e.g. Prisma Client)
+
+```bash
+$ prisma migrate dev
+```
+
+Pull the schema from an existing database, updating the Prisma schema
+
+```bash
+$ prisma db pull
+```
+
+Push the Prisma schema state to the database
+
+```bash
+$ prisma db push
+```
+
+Validate your Prisma schema
+
+```bash
+$ prisma validate
+```
+
+Format your Prisma schema
+
+```bash
+$ prisma format
+```
+
+Display Prisma version info
+
+```bash
+$ prisma version
+```
+
+Display Prisma debug info
+
+```bash
+$ prisma debug
+```
