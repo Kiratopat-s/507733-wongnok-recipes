@@ -46,6 +46,9 @@ model recipe {
   description    String?
   image_url      String       @db.VarChar(255)
   steps          String[]
+  time_spent_hh    Int
+  time_spent_mm    Int
+  difficulty    String
   current_rating Float
   voted_count    Int
   read_count     Int
