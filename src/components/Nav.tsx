@@ -18,9 +18,6 @@ function Nav() {
         >
           <span>
             <i className="fa-solid fa-kitchen-set mr-"></i> วงนอก
-            <span className="absolute top-7 left-7 w-full text-[0.8rem] font-normal">
-              (คล้าย ๆ วงใน)
-            </span>
           </span>
         </Link>
       </div>
