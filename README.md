@@ -2,6 +2,8 @@
 
 A Wongnok web application designed to foster a vibrant community of food enthusiasts in Thailand and beyond.
 
+# 🌏[Check out my production server](https://kirato.cloud)
+
 ## How to start dev
 
 ```bash
@@ -39,6 +41,9 @@ NEXTAUTH_SECRET=
 - NEXTJS version 14.0.4
 - Tailwind CSS + Daisy UI
 - NextAuth.js
+- Docker
+- PostgresDB
+- Linux server
 
 # Prisma
 
@@ -102,4 +107,18 @@ Display Prisma debug info
 
 ```bash
 $ prisma debug
+```
+
+# How to run Docker
+
+Normal run
+
+```bash
+$ docker-compose up
+```
+
+Detached run
+
+```bash
+$ docker-compose up -d
 ```
