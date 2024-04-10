@@ -10,7 +10,7 @@ function Nav() {
   const { data: session } = useSession();
   return (
     <nav className="z-50 fixed top-0 w-full p-4 bg-black text-white flex justify-around  rounded-b-lg ring-1 ring-white shadow shadow-white">
-      <Toaster position="top-right" reverseOrder={false} />
+      <Toaster position="top-center" reverseOrder={false} />
       <div className="flex justify-start item-center align-middle">
         <Link
           className="flex flex-col justify-center hover:text-rose-500 hover:drop-shadow-xl text-2xl font-bold drop-shadow drop-shadow-white cursor-pointer transition-all duration-300 ease-in-out"

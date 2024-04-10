@@ -279,27 +279,25 @@ function recipesDetails({ params }: { params: { recipeId: string } }) {
         className="w-[90vw] bg-white mt-3 rounded-md text-black py-2 px-4"
       >
         <div className=" flex flex-col gap-2 justify-center">
-          <div className="flex justify-between">
-            <h1 className="text-3xl font-bold drop-shadow flex flex-col justify-center">
-              {receipeDeatils?.title}
-            </h1>
-            {session?.user?.email === receipeDeatils?.member?.email && (
-              <div className="flex gap-2">
-                <Link
-                  href={`/recipes/edit/${recipeId}`}
-                  className="btn bg-orange-500 text-white"
-                >
-                  <i className="fa-solid fa-pen-to-square mr-2"></i>Edit
-                </Link>
-                <button
-                  onClick={handleDelteRecipe}
-                  className="btn bg-red-500 text-white"
-                >
-                  <i className="fa-solid fa-trash mr-2"></i>Delete
-                </button>
-              </div>
-            )}
-          </div>
+          <h1 className="text-2xl md:text-3xl font-bold drop-shadow flex flex-col justify-center">
+            {receipeDeatils?.title}
+          </h1>
+          {session?.user?.email === receipeDeatils?.member?.email && (
+            <div className="flex gap-2 flex-wrap">
+              <Link
+                href={`/recipes/edit/${recipeId}`}
+                className="btn bg-orange-500 text-white"
+              >
+                <i className="fa-solid fa-pen-to-square mr-2"></i>Edit
+              </Link>
+              <button
+                onClick={handleDelteRecipe}
+                className="btn bg-red-500 text-white"
+              >
+                <i className="fa-solid fa-trash mr-2"></i>Delete
+              </button>
+            </div>
+          )}
           <Image
             src={`/images/recipes/${receipeDeatils?.image_url}`}
             alt={`image for menu ${1}`}
