@@ -13,6 +13,12 @@ module.exports = {
         port: "",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "daisyui.com",
+        port: "",
+        pathname: "/**",
+      },
     ],
   },
   webpack: (config, { isServer }) => {
