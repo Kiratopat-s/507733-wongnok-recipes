@@ -1,7 +1,9 @@
-import NextAuth from 'next-auth/next';
+import NextAuth, { getServerSession } from 'next-auth/next';
 import GoogleProvider from 'next-auth/providers/google';
-import LineProvider from "next-auth/providers/line";
+// import LineProvider from "next-auth/providers/line";
 import { PrismaClient } from '@prisma/client';
+import { config } from 'dotenv';
+import { GetServerSidePropsContext, NextApiRequest, NextApiResponse } from 'next';
 const prisma = new PrismaClient();
 const secret = process.env.NEXTAUTH_SECRET
 export const authOptions = {
@@ -13,17 +15,7 @@ export const authOptions = {
         }),
     ],
     callbacks: {
-        authorized({ auth, request: { nextUrl } }: { auth: { user: any }, request: { nextUrl: any } }) {
-            const isLoggedIn = !!auth?.user;
-            const isOnDashboard = nextUrl.pathname.startsWith('/dashboard');
-            if (isOnDashboard) {
-                if (isLoggedIn) return true;
-                return false; // Redirect unauthenticated users to login page
-            } else if (isLoggedIn) {
-                return Response.redirect(new URL('/dashboard', nextUrl));
-            }
-            return true;
-        },
+
         async jwt({ token, user, account }: { token: any, user: any, account: any }) {
             if (account) {
                 token.id_token = account.id_token;
@@ -54,4 +46,5 @@ export const authOptions = {
         },
     },
 };
+
 export default NextAuth(authOptions)
