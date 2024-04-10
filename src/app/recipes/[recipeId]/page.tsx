@@ -279,7 +279,7 @@ function recipesDetails({ params }: { params: { recipeId: string } }) {
         className="w-[90vw] bg-white mt-3 rounded-md text-black py-2 px-4"
       >
         <div className=" flex flex-col gap-2 justify-center">
-          <h1 className="text-2xl md:text-3xl font-bold drop-shadow flex flex-col justify-center">
+          <h1 className="text-3xl font-bold drop-shadow flex flex-col justify-center">
             {receipeDeatils?.title}
           </h1>
           {session?.user?.email === receipeDeatils?.member?.email && (
