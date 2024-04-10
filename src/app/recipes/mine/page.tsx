@@ -4,46 +4,50 @@ import { debounce } from "lodash";
 import { useState, useEffect, useCallback } from "react";
 import { Food } from "@/interface/recipes";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 export default function Home() {
-  const food: Food[] = [
-    {
-      id: 1,
-      name: "กระเพราหมูสับ",
-      rating: 4.5,
-      src: "/images/recipes/reciepe_1.webp",
-    },
-    {
-      id: 2,
-      name: "แพนงหมู",
-      rating: 4.6,
-      src: "/images/recipes/reciepe_1.webp",
-    },
-    {
-      id: 3,
-      name: "ต้มยำกุ้ง",
-      rating: 4.1,
-      src: "/images/recipes/reciepe_1.webp",
-    },
-  ];
-
+  const { data: session } = useSession();
   const [searchKey, setsearchKey] = useState<string>(``);
-  const [filteredFood, setFilteredFood] = useState<Food[]>(food);
+  const [filteredFood, setFilteredFood] = useState<Food[]>([]);
+  const [food, setFood] = useState<Food[]>([]);
+  const [showNumber, setShowNumber] = useState<number>(5);
 
   const debouncedSave = useCallback(
     debounce((nextValue) => setFilteredFood(nextValue), 500),
     []
   );
 
-  useEffect(() => {
-    if (searchKey === "") {
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setsearchKey(e.target.value);
+    if (e.target.value === "") {
       debouncedSave(food);
-    } else if (searchKey) {
+    } else {
       debouncedSave(
-        food.filter((item) => item.name.toLowerCase().includes(searchKey))
+        food.filter((item) => item.title.toLowerCase().includes(e.target.value))
       );
     }
-  }, [searchKey, debouncedSave]);
+  };
+
+  async function fetchRecipes() {
+    await fetch(`/api/recipes/post/ownRecipes`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ member_email: session?.user?.email }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setFood(data);
+        setFilteredFood(data);
+      });
+  }
+
+  useEffect(() => {
+    fetchRecipes();
+  }, []);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
@@ -64,9 +68,7 @@ export default function Home() {
               placeholder="Search"
               className="input input-bordered w-full  self-center bg-slate-300 text-black"
               value={searchKey}
-              onChange={(e) => {
-                setsearchKey(e.target.value);
-              }}
+              onChange={handleSearch}
             />
           </div>
         </div>
@@ -79,14 +81,24 @@ export default function Home() {
           </button>
         </div>
         <div className="flex flex-wrap w-full gap-4 mt-4">
-          {filteredFood.map((item: Food) => (
+          {filteredFood.slice(0, showNumber).map((item: Food) => (
             <MenuCard
-              menuName={item.name}
+              menuName={item.title}
               menuId={item.id}
-              src={item.src}
-              rating={item.rating}
+              src={item.image_url}
+              rating={item.current_rating}
+              isOwner={true}
+              isHome={false}
             />
           ))}
+          <button
+            onClick={() => {
+              setShowNumber(showNumber + 10);
+            }}
+            className="btn w-full"
+          >
+            Load more
+          </button>
         </div>
       </section>
     </main>

@@ -7,44 +7,53 @@ import { Food } from "@/interface/recipes";
 import Link from "next/link";
 
 export default function Home() {
-  const food: Food[] = [
-    {
-      id: 1,
-      name: "กระเพราหมูสับ",
-      rating: 4.5,
-      src: "/images/recipes/reciepe_1.webp",
-    },
-    {
-      id: 2,
-      name: "แพนงหมู",
-      rating: 4.6,
-      src: "/images/recipes/reciepe_1.webp",
-    },
-    {
-      id: 3,
-      name: "ต้มยำกุ้ง",
-      rating: 4.1,
-      src: "/images/recipes/reciepe_1.webp",
-    },
-  ];
-
   const [searchKey, setsearchKey] = useState<string>(``);
-  const [filteredFood, setFilteredFood] = useState<Food[]>(food);
+  const [food, setFood] = useState<Food[]>([]);
+  const [filteredFood, setFilteredFood] = useState<Food[]>([]);
+  const [loaded, setloaded] = useState<boolean>(false);
+  const [showNumber, setShowNumber] = useState<number>(5);
 
   const debouncedSave = useCallback(
     debounce((nextValue) => setFilteredFood(nextValue), 500),
     []
   );
 
-  useEffect(() => {
-    if (searchKey === "") {
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setsearchKey(e.target.value);
+    if (e.target.value === "") {
       debouncedSave(food);
-    } else if (searchKey) {
+    } else {
       debouncedSave(
-        food.filter((item) => item.name.toLowerCase().includes(searchKey))
+        food.filter((item) => item.title.toLowerCase().includes(e.target.value))
       );
     }
-  }, [searchKey, debouncedSave]);
+  };
+
+  const handleSortByLatest = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setFilteredFood(
+      [...food].sort((a, b) =>
+        String(b.posted_date).localeCompare(String(a.posted_date))
+      )
+    );
+  };
+
+  const handleSortByRating = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setFilteredFood(
+      [...food].sort((a, b) => b.current_rating - a.current_rating)
+    );
+  };
+
+  useEffect(() => {
+    fetch("/api/recipes/get/recipesByRating")
+      .then((res) => res.json())
+      .then((data) => {
+        setFood(data);
+        setFilteredFood(data);
+        setloaded(true);
+      });
+  }, []);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
@@ -70,44 +79,67 @@ export default function Home() {
           </span>
         </div>
         <div className="flex w-full justify-center">
-          {/* <div className="flex gap-8 mr-10"> */}
           <div className="form-control flex flex-row justify-center gap-2 w-[90vw]">
             <input
               type="text"
               placeholder="Search"
               className="input input-bordered w-full  self-center bg-slate-300 text-black"
               value={searchKey}
-              onChange={(e) => {
-                setsearchKey(e.target.value);
-              }}
+              onChange={handleSearch}
             />
-            {/* <button
-                onClick={() => {}}
-                className="btn bg-orange-800 text-white"
-              >
-                Search
-              </button> */}
           </div>
         </div>
         <div className="flex w-full justify-between gap-4">
-          <button className="flex-grow btn btn-primary bg-orange-500">
+          <button
+            onClick={handleSortByRating}
+            className="flex-grow btn btn-primary bg-orange-500"
+          >
             By rating
           </button>
-          <button className="flex-grow btn btn-primary bg-purple-500">
+          <button
+            onClick={handleSortByLatest}
+            className="flex-grow btn btn-primary bg-purple-500"
+          >
             By latest
           </button>
         </div>
-        {/* </div> */}
         <div className="flex flex-wrap w-full gap-4 mt-4">
-          {filteredFood.map((item: Food) => (
-            <MenuCard
-              // session={session}
-              menuName={item.name}
-              menuId={item.id}
-              src={item.src}
-              rating={item.rating}
-            />
-          ))}
+          {filteredFood
+            .slice(0, showNumber)
+            .map((item: Food, index: number) => (
+              <MenuCard
+                key={index}
+                menuName={item.title}
+                menuId={item.id}
+                src={item.image_url}
+                rating={item.current_rating}
+                isOwner={false}
+                isHome={true}
+                hh={item.time_spent_hh}
+                mm={item.time_spent_mm}
+                difficulty={item.difficulty}
+              />
+            ))}
+          <button
+            onClick={() => {
+              setShowNumber(showNumber + 10);
+            }}
+            className="btn w-full"
+          >
+            Load more
+          </button>
+          {loaded && filteredFood.length === 0 && (
+            <div className="flex flex-col w-full items-center justify-center border-2 border-blue-500 text-2xl text-white rounded-lg shadow-lg p-2">
+              <p>We don't have this menu yet. </p>
+              <p>
+                Be the first to{" "}
+                <Link href={"/recipes/newRecipe"} className="text-orange-500">
+                  Create
+                </Link>{" "}
+                this menu : <span className="text-purple-500">{searchKey}</span>
+              </p>
+            </div>
+          )}
         </div>
       </section>
     </main>
