@@ -6,6 +6,38 @@ A Wongnok web application designed to foster a vibrant community of food enthusi
 
 ## How to start dev
 
+1. install pnpm for faster package management
+
+```bash
+$ npm install -g pnpm
+```
+
+2. install node packages
+
+```bash
+$ pnpm install
+```
+
+3. run Postgresql using docker
+
+```bash
+$ docker-compose up -d
+```
+
+4. push the Prisma schema state to the database
+
+```bash
+$ pnpm prisma db push
+```
+
+5. run dev server
+
+```bash
+$ pnpm dev
+```
+
+# pnpm cli
+
 ```bash
 Install package
 $ pnpm install
@@ -25,7 +57,7 @@ $ pnpm start
 
 ps. I use pnpm as node package management, you can use what you prefer (such as yarn, npm, bun, etc...)
 
-### Don't forget to config .env file !
+## Don't forget to config .env file !
 
 ```.env
 NEXTAUTH_URL=
@@ -35,15 +67,6 @@ GOOGLE_CLIENT_ID=
 GOOGLE_CLIENT_SECRET=
 NEXTAUTH_SECRET=
 ```
-
-## Tech Stack
-
-- NEXTJS version 14.0.4
-- Tailwind CSS + Daisy UI
-- NextAuth.js
-- Docker
-- PostgresDB
-- Linux server
 
 # Prisma
 
@@ -122,3 +145,12 @@ Detached run
 ```bash
 $ docker-compose up -d
 ```
+
+## Tech Stack
+
+- NEXTJS version 14.0.4
+- Tailwind CSS + Daisy UI
+- NextAuth.js
+- Docker
+- PostgresDB
+- Linux server
