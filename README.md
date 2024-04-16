@@ -59,14 +59,16 @@ ps. I use pnpm as node package management, you can use what you prefer (such as 
 
 ## Don't forget to config .env file !
 
+local.env
+
 ```.env
-NEXTAUTH_URL=
-LINE_CLIENT_ID=
-LINE_CLIENT_SECRET=
-GOOGLE_CLIENT_ID=
-GOOGLE_CLIENT_SECRET=
-NEXTAUTH_SECRET=
+NEXTAUTH_URL=http://localhost:3000
+GOOGLE_CLIENT_ID=${get from google oauth}
+GOOGLE_CLIENT_SECRET=${get from google oauth}
+NEXTAUTH_SECRET=kiratopat
 ```
+
+Or otherwise please contact me via Line ID : `kiratopat`
 
 # Prisma
 
