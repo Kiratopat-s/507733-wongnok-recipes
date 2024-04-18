@@ -6,6 +6,20 @@ A Wongnok web application designed to foster a vibrant community of food enthusi
 
 ## How to start dev
 
+0. Config .env file !
+
+.env for local
+
+```.env
+NEXTAUTH_URL=http://localhost:3000
+GOOGLE_CLIENT_ID=${get from google oauth}
+GOOGLE_CLIENT_SECRET=${get from google oauth}
+NEXTAUTH_SECRET=kiratopat
+```
+
+Or otherwise please contact me via Line ID : `kiratopat`
+
+
 1. install pnpm for faster package management
 
 ```bash
@@ -57,20 +71,7 @@ $ pnpm start
 
 ps. I use pnpm as node package management, you can use what you prefer (such as yarn, npm, bun, etc...)
 
-## Don't forget to config .env file !
-
-local.env
-
-```.env
-NEXTAUTH_URL=http://localhost:3000
-GOOGLE_CLIENT_ID=${get from google oauth}
-GOOGLE_CLIENT_SECRET=${get from google oauth}
-NEXTAUTH_SECRET=kiratopat
-```
-
-Or otherwise please contact me via Line ID : `kiratopat`
-
-# Prisma
+# Prisma cli
 
 Examples
 
